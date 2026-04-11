@@ -46,11 +46,19 @@ async function main() {
   ];
 
   for (const data of servicesData) {
-    await prisma.service.upsert({
+    const existing = await prisma.service.findFirst({
       where: { title: data.title },
-      update: data,
-      create: data,
     });
+    if (!existing) {
+      await prisma.service.create({
+        data,
+      });
+    } else {
+      await prisma.service.update({
+        where: { id: existing.id },
+        data,
+      });
+    }
   }
 
   // Portfolio (8 items), BlogArticles (5 published), ContactMessages (3)
