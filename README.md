@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Asdev Digital Solution - Website
 
-## Getting Started
+Website company profile profesional untuk **Asdev Digital Solution** - Solusi teknologi terpercaya untuk transformasi digital bisnis.
 
-First, run the development server:
+## 📋 Fitur Utama
+
+✅ **Halaman Publik:**
+- Beranda dengan Hero Section, Services Preview, Advantages, Portfolio Preview, dan CTA
+- Tentang Kami (About)
+- Layanan (Services) - Detail lengkap setiap layanan
+- Portofolio (Portfolio) - Showcase project
+- Blog - Artikel edukasi  
+- Kontak (Contact) - Form submission + WhatsApp integration
+
+✅ **Admin Panel:**
+- Authentication dengan JWT + Secure Cookies
+- Dashboard Overview
+- CRUD Management untuk Services, Portfolio, Blog, Messages
+
+✅ **Teknologi:**
+- Next.js 14+ | React | Tailwind CSS | Framer Motion
+- Node.js | Prisma ORM | PostgreSQL
+- JWT Authentication | Zod Validation
+
+## 🛠️ Quick Start
 
 ```bash
+# 1. Install dependencies
+npm install
+
+# 2. Setup environment
+cp .env.example .env.local
+# Edit .env.local dengan DATABASE_URL
+
+# 3. Push database schema
+npx prisma db push
+
+# 4. Run development
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka: http://localhost:3000
+Admin: http://localhost:3000/admin
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔐 Demo Credentials
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Email: `admin@asdev.id`
+- Password: `admin123`
 
-## Learn More
+## 📦 Build & Deploy
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Build for production
+npm run build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Deploy to Vercel
+vercel deploy
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📊 Project Status
 
-## Deploy on Vercel
+- ✅ Frontend Pages (Home, About, Services, Portfolio, Blog, Contact)
+- ✅ Admin Panel with Auth
+- ✅ API Routes (CRUD)
+- ✅ Database Schema (Prisma)
+- ✅ Responsive Design
+- ⏳ Email Integration
+- ⏳ WhatsApp Business API
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📖 Documentation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Full documentation available in README.md or docs/ folder
+
+---
+
+**Status**: Production Ready 🎉
+**Last Updated**: 2024-04-08

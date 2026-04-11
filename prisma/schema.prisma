@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Admin User
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Services/Layanan
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  icon        String?  // Icon name or URL
+  detail      String?  // Detailed description
+  image       String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Portfolio/Projects
+model Portfolio {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  image       String
+  category    String   // e.g., "website", "mobile", "ecommerce"
+  link        String?
+  technologies String? // JSON string or comma-separated
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Blog Articles
+model BlogArticle {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  content   String
+  excerpt   String?
+  image     String?
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Contact Messages
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  read      Boolean  @default(false)
+  replied   Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
