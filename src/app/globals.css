@@ -78,6 +78,11 @@
     animation: tech-marquee-scroll 36s linear infinite;
   }
 
+  .tech-marquee-track-reverse {
+    animation-direction: reverse;
+    animation-duration: 32s;
+  }
+
   .tech-marquee:hover .tech-marquee-track {
     animation-play-state: paused;
   }

@@ -39,7 +39,10 @@ const flyingTech = [
   { name: 'Laravel', icon: 'https://cdn.simpleicons.org/laravel/FF2D20', bg: 'bg-rose-500/10', top: '36%', duration: 44, delay: 15 },
 ];
 
-const marqueeStack = [...techStack, ...techStack];
+const topRowTech = techStack.slice(0, 8);
+const bottomRowTech = techStack.slice(8);
+const topRowMarquee = [...topRowTech, ...topRowTech];
+const bottomRowMarquee = [...bottomRowTech, ...bottomRowTech];
 
 export default function HeroSection() {
   return (
@@ -161,22 +164,43 @@ export default function HeroSection() {
         </div>
 
         <div className="mt-12 rounded-2xl border border-slate-200 bg-white/85 px-3 py-3 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/75">
-          <div className="tech-marquee">
-            <div className="tech-marquee-track">
-              {marqueeStack.map((tech, index) => (
-                <div
-                  key={`${tech.name}-${index}`}
-                  className="mr-3 inline-flex min-w-[210px] items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-700 dark:bg-slate-800"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <span className={`inline-flex h-7 w-7 items-center justify-center rounded-lg ${tech.bg}`}>
-                      <img src={tech.icon} alt={tech.name} className="h-4 w-4 object-contain" />
-                    </span>
-                    <span className="text-sm font-semibold text-slate-800 dark:text-slate-100">{tech.name}</span>
+          <div className="space-y-3">
+            <div className="tech-marquee">
+              <div className="tech-marquee-track">
+                {topRowMarquee.map((tech, index) => (
+                  <div
+                    key={`top-${tech.name}-${index}`}
+                    className="mr-3 inline-flex min-w-[210px] items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-700 dark:bg-slate-800"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className={`inline-flex h-7 w-7 items-center justify-center rounded-lg ${tech.bg}`}>
+                        <img src={tech.icon} alt={tech.name} className="h-4 w-4 object-contain" />
+                      </span>
+                      <span className="text-sm font-semibold text-slate-800 dark:text-slate-100">{tech.name}</span>
+                    </div>
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500 dark:text-slate-400">{tech.type}</span>
                   </div>
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500 dark:text-slate-400">{tech.type}</span>
-                </div>
-              ))}
+                ))}
+              </div>
+            </div>
+
+            <div className="tech-marquee">
+              <div className="tech-marquee-track tech-marquee-track-reverse">
+                {bottomRowMarquee.map((tech, index) => (
+                  <div
+                    key={`bottom-${tech.name}-${index}`}
+                    className="mr-3 inline-flex min-w-[210px] items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-700 dark:bg-slate-800"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className={`inline-flex h-7 w-7 items-center justify-center rounded-lg ${tech.bg}`}>
+                        <img src={tech.icon} alt={tech.name} className="h-4 w-4 object-contain" />
+                      </span>
+                      <span className="text-sm font-semibold text-slate-800 dark:text-slate-100">{tech.name}</span>
+                    </div>
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500 dark:text-slate-400">{tech.type}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
