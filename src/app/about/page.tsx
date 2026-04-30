@@ -1,99 +1,113 @@
-import { Metadata } from 'next'
+﻿import { Metadata } from 'next';
+import Link from 'next/link';
+import Button from '@/components/shared/Button';
+import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal';
 
 export const metadata: Metadata = {
-  title: 'Tentang Kami - Asdev Digital Solution',
-  description: 'Pelajari lebih lanjut tentang Asdev Digital Solution, visi, misi, dan tim kami.',
-}
+  title: 'Tentang Kami - ASDEV Solution Technology',
+  description:
+    'Profil ASDEV Solution Technology: visi, nilai kerja, dan pendekatan delivery untuk membantu bisnis bertumbuh lewat teknologi.',
+};
+
+const principles = [
+  {
+    title: 'Business First',
+    description: 'Keputusan teknis selalu dikaitkan ke tujuan bisnis: efisiensi, growth, dan pengalaman pelanggan.',
+  },
+  {
+    title: 'Execution Discipline',
+    description: 'Proses kerja jelas dari scope, timeline, QA, hingga handover agar project tetap terkontrol.',
+  },
+  {
+    title: 'Long-term Architecture',
+    description: 'Solusi dibangun agar mudah dikembangkan saat bisnis Anda bergerak dari CV menuju startup scale-up.',
+  },
+  {
+    title: 'Transparent Collaboration',
+    description: 'Komunikasi progres, kendala, dan opsi keputusan dilakukan terbuka sepanjang implementasi.',
+  },
+];
+
+const timeline = [
+  { year: '2020', text: 'Memulai sebagai praktik freelance dengan fokus web development.' },
+  { year: '2022', text: 'Menangani proyek sistem internal dan automasi untuk berbagai sektor bisnis.' },
+  { year: '2024', text: 'Memperluas layanan ke product strategy, UI/UX, dan technical partnership.' },
+  { year: '2026', text: 'Bertransformasi sebagai ASDEV Solution Technology untuk mendorong startup-ready delivery.' },
+];
 
 export default function About() {
   return (
     <div className="pt-16">
-      {/* Hero Section */}
-      <section className="section py-20 bg-gradient-to-br from-gray-50 to-white">
+      <section className="bg-gradient-to-br from-slate-50 to-white py-20 dark:from-slate-950 dark:to-slate-900">
         <div className="container mx-auto px-4">
-          <h1 className="text-5xl font-black text-gray-900 mb-6">Tentang Kami</h1>
-          <p className="text-xl text-gray-600 max-w-3xl">
-            Kami adalah tim profesional yang berdedikasi untuk memberikan solusi teknologi terbaik
-            untuk transformasi digital bisnis Anda.
-          </p>
+          <Reveal>
+            <span className="inline-flex rounded-full border border-primary-200 bg-primary-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-primary-700 dark:border-primary-900 dark:bg-primary-900/30 dark:text-primary-200">
+              Company Story
+            </span>
+            <h1 className="mt-6 text-4xl font-black leading-tight text-slate-900 md:text-6xl dark:text-slate-100">
+              Membangun Solusi Digital yang
+              <span className="block text-primary-500">Bisa Dipakai, Bukan Sekadar Dipamerkan</span>
+            </h1>
+            <p className="mt-6 max-w-3xl text-base leading-relaxed text-slate-600 md:text-lg dark:text-slate-300">
+              ASDEV Solution Technology lahir dari pengalaman lebih dari 5 tahun di lapangan. Kami memahami kebutuhan owner bisnis yang butuh partner teknis cepat, rapi, dan bisa diandalkan.
+            </p>
+          </Reveal>
         </div>
       </section>
 
-      {/* Company Info */}
-      <section className="section py-20">
+      <section className="section">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl font-black text-gray-900 mb-6">Asdev Digital Solution</h2>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Asdev Digital Solution adalah perusahaan yang bergerak di bidang teknologi informasi
-                yang menyediakan layanan pengembangan software dan solusi digital untuk membantu
-                bisnis bertransformasi secara digital.
+          <div className="grid gap-8 lg:grid-cols-[1fr_0.95fr]">
+            <Reveal className="surface-card p-7 md:p-9">
+              <h2 className="text-3xl font-black text-slate-900 dark:text-slate-100">Siapa Kami</h2>
+              <p className="mt-5 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                Kami adalah tim product-minded developer yang membantu bisnis merancang, membangun, dan mengembangkan platform digital. Fokus kami mencakup website branding, sistem operasional internal, dan integrasi proses bisnis.
               </p>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Kami fokus pada pembuatan aplikasi berbasis web dan mobile, serta pengembangan sistem
-                yang disesuaikan dengan kebutuhan klien. Dengan pengalaman lebih dari 5 tahun, kami
-                telah membantu puluhan bisnis mencapai tujuan digital mereka.
+              <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                Pendekatan kami menyeimbangkan kualitas engineering, kecepatan delivery, dan hasil bisnis. Dengan itu, platform yang Anda bangun hari ini tetap relevan untuk pertumbuhan besok.
               </p>
-            </div>
-            <div className="bg-gradient-to-br from-primary to-primary-dark rounded-2xl p-12 text-white flex items-center justify-center min-h-96">
-              <div className="text-6xl">🚀</div>
-            </div>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link href="/services">
+                  <Button variant="outline">Eksplor Layanan</Button>
+                </Link>
+                <Link href="/contact">
+                  <Button>Konsultasi Strategi</Button>
+                </Link>
+              </div>
+            </Reveal>
+
+            <Reveal className="surface-card p-7 md:p-9" delay={0.1}>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 dark:text-primary-300">Journey</p>
+              <Stagger className="mt-5 space-y-4" stagger={0.1}>
+                {timeline.map((item) => (
+                  <StaggerItem key={item.year} className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+                    <p className="text-sm font-black text-slate-900 dark:text-slate-100">{item.year}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{item.text}</p>
+                  </StaggerItem>
+                ))}
+              </Stagger>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* Vision & Mission */}
-      <section className="section py-20 bg-gray-50">
+      <section className="section bg-slate-100/60 dark:bg-slate-900/30">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Vision */}
-            <div className="bg-white rounded-xl p-8 shadow-md">
-              <h3 className="text-2xl font-black text-gray-900 mb-4">Visi Kami</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Menjadi perusahaan penyedia solusi digital terpercaya yang membantu transformasi
-                bisnis melalui teknologi inovatif.
-              </p>
-            </div>
+          <Reveal className="mb-12 text-center">
+            <h2 className="section-heading">Prinsip Kerja Kami</h2>
+            <p className="section-subheading mx-auto">Empat prinsip ini menjaga setiap project tetap bernilai bagi bisnis, bukan hanya selesai secara teknis.</p>
+          </Reveal>
 
-            {/* Mission */}
-            <div className="bg-white rounded-xl p-8 shadow-md">
-              <h3 className="text-2xl font-black text-gray-900 mb-4">Misi Kami</h3>
-              <ul className="space-y-3 text-gray-600">
-                <li className="flex items-start gap-3">
-                  <span className="text-primary font-bold">✓</span>
-                  <span>Memberikan solusi teknologi yang efektif dan efisien</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-primary font-bold">✓</span>
-                  <span>Mengembangkan sistem yang sesuai dengan kebutuhan klien</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-primary font-bold">✓</span>
-                  <span>Memberikan pelayanan profesional dan berkelanjutan</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-primary font-bold">✓</span>
-                  <span>Mengikuti perkembangan teknologi terbaru</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="section py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="section-title text-4xl font-black text-gray-900 mb-12 text-center">
-            Tim Kami
-          </h2>
-          <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
-            Tim profesional dan berpengalaman siap mendampingi Anda dalam perjalanan transformasi
-            digital.
-          </p>
+          <Stagger className="grid grid-cols-1 gap-5 md:grid-cols-2" stagger={0.09}>
+            {principles.map((item) => (
+              <StaggerItem key={item.title} className="surface-card p-6">
+                <h3 className="text-xl font-black text-slate-900 dark:text-slate-100">{item.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{item.description}</p>
+              </StaggerItem>
+            ))}
+          </Stagger>
         </div>
       </section>
     </div>
-  )
+  );
 }

@@ -1,117 +1,72 @@
-'use client'
+﻿'use client';
 
-import Link from 'next/link'
-import Button from '@/components/shared/Button'
-import { motion } from 'framer-motion'
+import Link from 'next/link';
+import Button from '@/components/shared/Button';
+import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal';
 
 const services = [
   {
     id: 1,
-    title: 'Website Development',
-    description: 'Buat website profesional yang modern dan responsif untuk meningkatkan online presence bisnis Anda.',
-    icon: '🌐',
-    color: 'bg-blue-100',
+    title: 'Website Company Profile',
+    description: 'Website profesional untuk memperkuat kredibilitas bisnis dan meningkatkan konversi lead.',
   },
   {
     id: 2,
-    title: 'Mobile App Development',
-    description: 'Aplikasi mobile native atau cross-platform untuk Android dan iOS dengan performa optimal.',
-    icon: '📱',
-    color: 'bg-green-100',
+    title: 'Custom Web Application',
+    description: 'Dashboard, CRM, ERP, dan sistem internal yang disesuaikan dengan alur operasional bisnis.',
   },
   {
     id: 3,
-    title: 'Sistem Informasi Custom',
-    description: 'Sistem informasi yang disesuaikan dengan kebutuhan bisnis Anda (ERP, POS, CRM, dll).',
-    icon: '⚙️',
-    color: 'bg-yellow-100',
+    title: 'API Integration & Automation',
+    description: 'Integrasi pembayaran, WhatsApp, email, dan third-party API untuk mempercepat proses kerja.',
   },
   {
     id: 4,
-    title: 'E-Commerce Solution',
-    description: 'Platform e-commerce yang lengkap dengan payment gateway dan inventory management.',
-    icon: '🛒',
-    color: 'bg-red-100',
+    title: 'UI/UX System Design',
+    description: 'Desain antarmuka modern dengan design system yang konsisten untuk pengalaman pengguna lebih baik.',
   },
   {
     id: 5,
-    title: 'UI/UX Design',
-    description: 'Desain interface yang menarik dan user experience yang intuitif untuk aplikasi Anda.',
-    icon: '🎨',
-    color: 'bg-purple-100',
+    title: 'Performance Optimization',
+    description: 'Audit dan optimasi performa agar website cepat, stabil, dan SEO-friendly di semua perangkat.',
   },
   {
     id: 6,
     title: 'Maintenance & Support',
-    description: 'Dukungan teknis berkelanjutan dan pemeliharaan sistem untuk performa optimal.',
-    icon: '🔧',
-    color: 'bg-pink-100',
+    description: 'Pendampingan teknis berkelanjutan agar sistem tetap aman, terkontrol, dan mudah dikembangkan.',
   },
-]
+];
 
 export default function ServicesPreview() {
   return (
-    <section className="section bg-gray-50 py-20">
+    <section className="section">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="section-title text-4xl md:text-5xl font-black mb-6">
-            Layanan Kami
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Kami menawarkan berbagai solusi teknologi yang dirancang untuk membantu bisnis Anda
-            berkembang dan bersaing di era digital.
+        <Reveal className="mb-14 text-center">
+          <h2 className="section-heading">Layanan yang Mendorong Pertumbuhan</h2>
+          <p className="section-subheading mx-auto">
+            Setiap layanan dirancang untuk satu tujuan utama: membantu CV Anda naik kelas menjadi startup dengan fondasi produk digital yang solid.
           </p>
-        </motion.div>
+        </Reveal>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-white rounded-xl p-8 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-2"
-            >
-              <div className={`${service.color} w-16 h-16 rounded-lg flex items-center justify-center text-3xl mb-4`}>
-                {service.icon}
+        <Stagger className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3" stagger={0.08}>
+          {services.map((service) => (
+            <StaggerItem key={service.id} className="surface-card group p-6">
+              <div className="mb-5 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary-500/10 text-primary-600 dark:text-primary-300">
+                <span className="h-2.5 w-2.5 rounded-full bg-current" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{service.title}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed mb-4">{service.description}</p>
-              <a
-                href="#"
-                className="text-primary-500 font-semibold text-sm hover:text-primary-700 transition-colors inline-flex items-center gap-2"
-              >
-                Selengkapnya
-                <span>→</span>
-              </a>
-            </motion.div>
+              <h3 className="text-xl font-black text-slate-900 dark:text-slate-100">{service.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{service.description}</p>
+              <div className="mt-5 text-sm font-semibold text-primary-500 transition group-hover:translate-x-1">Scope detail tersedia</div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
 
-        {/* CTA Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center"
-        >
+        <Reveal className="mt-12 text-center" y={14}>
           <Link href="/services">
-            <Button variant="primary" size="lg">
-              Lihat Semua Layanan
-            </Button>
+            <Button variant="outline" size="lg">Eksplor Seluruh Layanan</Button>
           </Link>
-        </motion.div>
+        </Reveal>
       </div>
     </section>
-  )
+  );
 }

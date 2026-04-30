@@ -1,4 +1,4 @@
-@reference "tailwindcss";
+﻿@reference "tailwindcss";
 
 @tailwind base;
 @tailwind components;
@@ -12,28 +12,40 @@
     --secondary-content: 255 255 255;
     --neutral: 0 0 0;
   }
+
+  body {
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(214, 45, 45, 0.07), transparent 26%),
+      radial-gradient(circle at 90% 90%, rgba(13, 42, 122, 0.09), transparent 30%);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display;
+  }
 }
 
 @layer components {
-  .btn-primary {
-    @apply bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
-  }
-  .btn-secondary {
-    @apply bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
-  }
-  .btn-outline {
-    @apply border-2 border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
-  }
   .section {
-    @apply py-20 lg:py-32;
+    @apply py-20 lg:py-28;
   }
-  .glass {
-    @apply bg-white/80 backdrop-blur-md border border-neutral-200 shadow-xl rounded-2xl;
-  }
-}
 
-body {
-  font-feature-settings:
-    "rlig" 1,
-    "calt" 1;
+  .section-heading {
+    @apply text-3xl font-black leading-tight text-slate-900 md:text-5xl dark:text-slate-100;
+  }
+
+  .section-subheading {
+    @apply mt-4 max-w-2xl text-base leading-relaxed text-slate-600 md:text-lg dark:text-slate-300;
+  }
+
+  .surface-card {
+    @apply rounded-2xl border border-slate-200/70 bg-white/90 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/80;
+  }
 }

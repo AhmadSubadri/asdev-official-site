@@ -1,80 +1,41 @@
-'use client'
+﻿'use client';
 
-import Link from 'next/link'
-import Button from '@/components/shared/Button'
-import { motion } from 'framer-motion'
+import Link from 'next/link';
+import Button from '@/components/shared/Button';
+import { Reveal } from '@/components/motion/Reveal';
 
 export default function CTASection() {
   return (
-    <section className="relative py-20 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-secondary-500 opacity-90" />
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 right-10 w-40 h-40 bg-white rounded-full opacity-20 blur-3xl" />
-        <div className="absolute bottom-10 left-10 w-40 h-40 bg-white rounded-full opacity-20 blur-3xl" />
-      </div>
+    <section className="section">
+      <div className="container mx-auto px-4">
+        <Reveal className="relative overflow-hidden rounded-3xl bg-[linear-gradient(120deg,#0d2a7a_0%,#1b2c56_45%,#d62d2d_100%)] p-8 text-white shadow-2xl md:p-12">
+          <div className="absolute right-0 top-0 h-56 w-56 rounded-full bg-white/10 blur-2xl" />
+          <div className="absolute -bottom-20 -left-14 h-56 w-56 rounded-full bg-white/10 blur-2xl" />
 
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto"
-        >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6">
-            Siap Transformasi Digital?
-          </h2>
+          <div className="relative z-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/75">Mulai dari sekarang</p>
+              <h2 className="mt-3 text-3xl font-black leading-tight md:text-5xl">
+                Siapkan Website CV Anda Menjadi Mesin Branding dan Akuisisi Klien
+              </h2>
+              <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/85 md:text-base">
+                Jika Anda serius membangun startup, website harus menjadi aset bisnis jangka panjang. Kami siap bantu dari strategi, desain, sampai implementasi.
+              </p>
+            </div>
 
-          <p className="text-lg md:text-xl text-white opacity-90 mb-8">
-            Hubungi kami sekarang untuk konsultasi gratis dan dapatkan solusi yang tepat untuk
-            bisnis Anda. Tim kami siap membantu Anda mencapai tujuan digital.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact">
-              <Button
-                variant="primary"
-                size="lg"
-                className="bg-white text-primary-500 hover:bg-gray-100"
-              >
-                Hubungi Kami Sekarang
-              </Button>
-            </Link>
-            <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-white text-white hover:bg-white hover:text-primary-500"
-              >
-                Chat via WhatsApp
-              </Button>
-            </a>
+            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+              <Link href="/contact">
+                <Button size="lg" className="w-full bg-white text-secondary-700 hover:bg-slate-100">Konsultasi Gratis</Button>
+              </Link>
+              <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
+                <Button size="lg" variant="outline" className="w-full border-white/70 bg-transparent text-white hover:border-white hover:bg-white/10">
+                  Chat WhatsApp
+                </Button>
+              </a>
+            </div>
           </div>
-
-          {/* Additional info */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
-            <div className="text-white">
-              <p className="text-3xl font-bold">24/7</p>
-              <p className="text-white opacity-80 text-sm mt-2">Support Tersedia</p>
-            </div>
-            <div className="text-white">
-              <p className="text-3xl font-bold">100%</p>
-              <p className="text-white opacity-80 text-sm mt-2">Kepuasan Klien</p>
-            </div>
-            <div className="text-white">
-              <p className="text-3xl font-bold">50+</p>
-              <p className="text-white opacity-80 text-sm mt-2">Project Sukses</p>
-            </div>
-          </motion.div>
-        </motion.div>
+        </Reveal>
       </div>
     </section>
-  )
+  );
 }

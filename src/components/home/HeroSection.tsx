@@ -1,123 +1,93 @@
-'use client'
+﻿'use client';
 
-import Link from 'next/link'
-import Button from '@/components/shared/Button'
-import { motion } from 'framer-motion'
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import Button from '@/components/shared/Button';
+
+const highlights = [
+  { label: 'Project Delivered', value: '50+' },
+  { label: 'Client Satisfaction', value: '100%' },
+  { label: 'Years Experience', value: '5+' },
+];
+
+const capabilities = ['Website & Landing Page', 'Custom Web App', 'Integrasi API', 'UI/UX Design'];
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white overflow-hidden pt-20">
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary-500 opacity-5 rounded-full -mr-48 -mt-48" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary-500 opacity-5 rounded-full -ml-48 -mb-48" />
+    <section className="relative overflow-hidden pt-28 md:pt-32">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute left-1/2 top-0 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-primary-200/40 blur-3xl dark:bg-primary-900/20" />
+        <div className="absolute -left-20 bottom-16 h-72 w-72 rounded-full bg-secondary-200/40 blur-3xl dark:bg-secondary-900/30" />
+      </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 leading-tight mb-6">
-              Transformasi Digital untuk{' '}
-              <span className="text-primary-500">Bisnis Anda</span>
+      <div className="container mx-auto px-4">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <span className="inline-flex items-center rounded-full border border-primary-200 bg-primary-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-primary-700 dark:border-primary-900 dark:bg-primary-900/30 dark:text-primary-200">
+              ASDEV Solution Technology
+            </span>
+
+            <h1 className="mt-6 text-4xl font-black leading-tight text-slate-900 md:text-6xl dark:text-slate-100">
+              Bangun Produk Digital yang
+              <span className="block text-primary-500">Siap Scale Sejak Hari Pertama</span>
             </h1>
 
-            <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
-              Kami menyediakan solusi teknologi terpercaya dan inovatif untuk membantu bisnis
-              Anda berkembang di era digital. Dari website hingga aplikasi mobile, kami siap
-              mewujudkan visi digital Anda.
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-slate-600 md:text-lg dark:text-slate-300">
+              Kami membantu bisnis merancang, membangun, dan mengembangkan website serta sistem digital dengan pendekatan engineering yang rapi, cepat, dan terukur.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+            <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/contact">
-                <Button variant="primary" size="lg">
-                  Hubungi Kami
-                  <span className="text-xl">→</span>
-                </Button>
+                <Button size="lg">Jadwalkan Konsultasi</Button>
               </Link>
               <Link href="/portfolio">
-                <Button variant="outline" size="lg">
-                  Lihat Portofolio
-                </Button>
+                <Button variant="outline" size="lg">Lihat Portofolio</Button>
               </Link>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-8">
-              <div>
-                <div className="text-3xl font-black text-primary-500">50+</div>
-                <p className="text-gray-600 text-sm mt-1">Project Selesai</p>
-              </div>
-              <div>
-                <div className="text-3xl font-black text-primary-500">30+</div>
-                <p className="text-gray-600 text-sm mt-1">Klien Puas</p>
-              </div>
-              <div>
-                <div className="text-3xl font-black text-primary-500">5+</div>
-                <p className="text-gray-600 text-sm mt-1">Tahun Pengalaman</p>
-              </div>
+            <div className="mt-10 grid max-w-2xl grid-cols-3 gap-4">
+              {highlights.map((item) => (
+                <div key={item.label} className="surface-card px-4 py-4">
+                  <p className="text-2xl font-black text-slate-900 dark:text-slate-100">{item.value}</p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.08em] text-slate-500 dark:text-slate-400">{item.label}</p>
+                </div>
+              ))}
             </div>
           </motion.div>
 
-          {/* Right - Illustration */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex justify-center"
+            initial={{ opacity: 0, y: 20, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.65, delay: 0.15 }}
+            className="surface-card relative overflow-hidden p-7"
           >
-            <div className="relative w-full max-w-md">
-              {/* Placeholder for illustration */}
-              <div className="relative bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl p-8 shadow-2xl aspect-square flex items-center justify-center">
-                <div className="text-center text-white">
-                  <div className="text-6xl mb-4">💻</div>
-                  <p className="text-sm opacity-90">Solusi Digital Terpercaya</p>
-                </div>
-              </div>
+            <div className="absolute right-0 top-0 h-28 w-28 rounded-bl-[3rem] bg-primary-500" />
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Core Capability</p>
+            <h3 className="mt-3 text-2xl font-black text-slate-900 dark:text-slate-100">End-to-End Delivery</h3>
 
-              {/* Floating cards */}
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="absolute -bottom-6 -left-6 bg-white rounded-lg shadow-lg p-4 max-w-xs"
-              >
-                <p className="text-sm font-semibold text-gray-900">Website Development</p>
-                <p className="text-xs text-gray-600 mt-1">Cepat, Modern, Responsif</p>
-              </motion.div>
+            <div className="mt-6 space-y-3">
+              {capabilities.map((item, index) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.35, delay: 0.25 + index * 0.08 }}
+                  className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 dark:border-slate-700 dark:bg-slate-900"
+                >
+                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{item}</span>
+                  <span className="h-2 w-2 rounded-full bg-primary-500" />
+                </motion.div>
+              ))}
+            </div>
 
-              <motion.div
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="absolute -top-6 -right-6 bg-white rounded-lg shadow-lg p-4 max-w-xs"
-              >
-                <p className="text-sm font-semibold text-gray-900">Aplikasi Mobile</p>
-                <p className="text-xs text-gray-600 mt-1">iOS & Android dalam satu platform</p>
-              </motion.div>
+            <div className="mt-7 rounded-xl bg-slate-950 px-4 py-4 text-slate-100 dark:bg-slate-800">
+              <p className="text-sm leading-relaxed">
+                Fokus kami bukan hanya desain cantik, tetapi arsitektur yang maintainable agar website CV Anda siap bertumbuh jadi startup.
+              </p>
             </div>
           </motion.div>
         </div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <div className="flex flex-col items-center gap-2 text-gray-400 text-sm">
-          <span>Scroll untuk selengkapnya</span>
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
-        </div>
-      </motion.div>
     </section>
-  )
+  );
 }

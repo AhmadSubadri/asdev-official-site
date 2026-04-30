@@ -1,17 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { JetBrains_Mono, Plus_Jakarta_Sans, Sora } from "next/font/google";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bodySans = Plus_Jakarta_Sans({
+  variable: "--font-body-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const displaySans = Sora({
+  variable: "--font-display-sans",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const codeMono = JetBrains_Mono({
+  variable: "--font-code-mono",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const viewport: Viewport = {
@@ -23,39 +31,39 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://asdev-digital.com'),
   title: {
-    default: "Asdev Digital Solution - Solusi Teknologi Terpercaya",
-    template: "%s | Asdev Digital Solution",
+    default: "ASDEV Solution Technology - Solusi Teknologi Terpercaya",
+    template: "%s | ASDEV Solution Technology",
   },
   description: "Kami menyediakan layanan website development, mobile app, sistem informasi, dan UI/UX design untuk transformasi digital bisnis Anda.",
   keywords: "asdev, digital solution, website development, mobile app, sistem informasi, ui/ux design, jakarta",
-  authors: [{ name: "Asdev Digital Solution" }],
-  creator: "Asdev Digital Solution",
-  publisher: "Asdev Digital Solution",
+  authors: [{ name: "ASDEV Solution Technology" }],
+  creator: "ASDEV Solution Technology",
+  publisher: "ASDEV Solution Technology",
   openGraph: {
     type: "website",
     locale: "id_ID",
     url: process.env.NEXT_PUBLIC_APP_URL || 'https://asdev-digital.com',
-    siteName: "Asdev Digital Solution",
-    title: "Asdev Digital Solution - Solusi Teknologi Terpercaya",
+    siteName: "ASDEV Solution Technology",
+    title: "ASDEV Solution Technology - Solusi Teknologi Terpercaya",
     description: "Website development, mobile app, sistem informasi, dan UI/UX design untuk transformasi digital bisnis Anda.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Asdev Digital Solution",
+        alt: "ASDEV Solution Technology",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Asdev Digital Solution",
+    title: "ASDEV Solution Technology",
     description: "Solusi teknologi terpercaya untuk transformasi digital bisnis Anda",
-    images: ["/twitter-image.png"],
+    images: ["/twitter-image"],
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-icon.png",
+    icon: "/icon",
+    apple: "/apple-icon",
   },
   robots: {
     index: true,
@@ -78,13 +86,19 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
+      className={`${bodySans.variable} ${displaySans.variable} ${codeMono.variable} h-full antialiased scroll-smooth`}
       data-scroll-behavior="smooth"
     >
       <head>
         <meta charSet="utf-8" />
         <meta name="language" content="Indonesian" />
         <meta name="theme-color" content="#D62D2D" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d);}catch(e){}})();",
+          }}
+        />
         {/* Preconnect to external resources */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -97,7 +111,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              name: "Asdev Digital Solution",
+              name: "ASDEV Solution Technology",
               url: process.env.NEXT_PUBLIC_APP_URL || 'https://asdev-digital.com',
               description: "Solusi teknologi terpercaya untuk transformasi digital bisnis",
               address: {
@@ -117,7 +131,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-white text-gray-900" suppressHydrationWarning>
+      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100" suppressHydrationWarning>
         <Navbar />
         <main className="flex-1 pt-20">{children}</main>
         <Footer />
@@ -125,6 +139,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-
-

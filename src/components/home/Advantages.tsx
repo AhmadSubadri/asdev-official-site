@@ -1,91 +1,53 @@
-'use client'
+﻿'use client';
 
-import { motion } from 'framer-motion'
+import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal';
 
-const advantages = [
+const differentiators = [
   {
     id: 1,
-    title: 'Solusi Custom',
-    description: 'Kami membuat solusi yang disesuaikan dengan kebutuhan spesifik bisnis Anda, bukan template generik.',
-    icon: '✨',
+    title: 'Product Thinking',
+    description: 'Setiap fitur diprioritaskan berdasarkan impact bisnis, bukan sekadar daftar permintaan.',
   },
   {
     id: 2,
-    title: 'Harga Kompetitif',
-    description: 'Dapatkan kualitas terbaik dengan harga yang kompetitif dan fleksibel sesuai budget Anda.',
-    icon: '💰',
+    title: 'Clean Engineering',
+    description: 'Codebase dibuat rapi dan maintainable agar mudah scale saat bisnis berkembang.',
   },
   {
     id: 3,
-    title: 'Tim Profesional',
-    description: 'Tim berpengalaman yang siap bekerja sama dengan kami dengan komunikasi yang transparan.',
-    icon: '👥',
+    title: 'Transparent Delivery',
+    description: 'Progress, scope, dan risiko dibuka jelas sehingga keputusan Anda tetap terkontrol.',
   },
   {
     id: 4,
-    title: 'Support Berkelanjutan',
-    description: 'Kami memberikan dukungan teknis berkelanjutan setelah project selesai untuk memastikan sistem berjalan optimal.',
-    icon: '🛡️',
+    title: 'Conversion Driven',
+    description: 'UI bukan hanya menarik, tetapi diarahkan untuk meningkatkan trust dan konversi lead.',
   },
-  {
-    id: 5,
-    title: 'Teknologi Terkini',
-    description: 'Menggunakan teknologi dan framework terbaru untuk memastikan sistem modern dan scalable.',
-    icon: '🚀',
-  },
-  {
-    id: 6,
-    title: 'Pengalaman Luas',
-    description: 'Lebih dari 5 tahun pengalaman menangani berbagai project untuk berbagai industri.',
-    icon: '🏆',
-  },
-]
+];
 
 export default function Advantages() {
   return (
-    <section className="section py-20">
+    <section className="section bg-slate-100/60 dark:bg-slate-900/30">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="section-title text-4xl md:text-5xl font-black mb-6">
-            Mengapa Memilih Kami?
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Kami berkomitmen memberikan solusi teknologi terbaik dengan dukungan profesional untuk
-            kesuksesan bisnis Anda.
-          </p>
-        </motion.div>
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <Reveal>
+            <h2 className="section-heading">Kenapa Klien Memilih ASDEV</h2>
+            <p className="section-subheading">
+              Anda butuh partner yang paham bisnis dan teknologi sekaligus. Kami bekerja dengan pendekatan strategis, bukan template.
+            </p>
+          </Reveal>
 
-        {/* Advantages Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {advantages.map((advantage, index) => (
-            <motion.div
-              key={advantage.id}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="flex gap-4"
-            >
-              <div className="flex-shrink-0">
-                <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-primary-500 text-white text-2xl">
-                  {advantage.icon}
-                </div>
-              </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{advantage.title}</h3>
-                <p className="text-gray-600 text-sm">{advantage.description}</p>
-              </div>
-            </motion.div>
-          ))}
+          <Stagger className="grid gap-4 sm:grid-cols-2" stagger={0.08}>
+            {differentiators.map((item) => (
+              <StaggerItem key={item.id} className="surface-card p-6">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-primary-600 dark:text-primary-300">0{item.id}</p>
+                <h3 className="mt-3 text-lg font-black text-slate-900 dark:text-slate-100">{item.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{item.description}</p>
+              </StaggerItem>
+            ))}
+          </Stagger>
         </div>
       </div>
     </section>
-  )
+  );
 }

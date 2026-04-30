@@ -1,135 +1,120 @@
-import { Metadata } from 'next'
+﻿import { Metadata } from 'next';
+import Link from 'next/link';
+import Image from 'next/image';
+import { db } from '@/lib/db';
+import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal';
 
 export const metadata: Metadata = {
-  title: 'Blog - Asdev Digital Solution',
-  description: 'Artikel dan tips tentang pengembangan website, mobile app, dan transformasi digital.',
+  title: 'Blog - ASDEV Solution Technology',
+  description: 'Insight praktis ASDEV seputar software development, product strategy, dan transformasi digital bisnis.',
+};
+
+const fallbackPosts = [
+  {
+    id: 'fallback-1',
+    title: 'Membangun Website Bisnis yang Siap Scale',
+    slug: 'website-bisnis-siap-scale',
+    excerpt: 'Panduan ringkas menyusun fondasi teknis website agar performa stabil saat traffic naik.',
+    image: '/brand/asdev-logo-light.png',
+    createdAt: new Date('2026-01-10'),
+    category: 'Website',
+  },
+  {
+    id: 'fallback-2',
+    title: 'Checklist Integrasi API untuk Operasional Perusahaan',
+    slug: 'checklist-integrasi-api',
+    excerpt: 'Langkah terstruktur agar integrasi antar sistem tidak menimbulkan data ganda dan error proses bisnis.',
+    image: '/brand/asdev-logo-dark.png',
+    createdAt: new Date('2026-02-12'),
+    category: 'Integrasi',
+  },
+  {
+    id: 'fallback-3',
+    title: 'Cara Menentukan Prioritas Fitur di Fase Awal Produk',
+    slug: 'prioritas-fitur-fase-awal',
+    excerpt: 'Framework sederhana untuk memilih fitur yang paling berdampak pada bisnis dan user.',
+    image: '/brand/asdev-logo-light.png',
+    createdAt: new Date('2026-03-03'),
+    category: 'Product',
+  },
+];
+
+async function getArticles() {
+  try {
+    return await db.blogArticle.findMany({
+      where: { published: true },
+      orderBy: { createdAt: 'desc' },
+      take: 24,
+    });
+  } catch (error) {
+    console.error('Failed to fetch blog articles:', error);
+    return [];
+  }
 }
 
-const blogPosts = [
-  {
-    id: 1,
-    title: '10 Tips Membuat Website yang SEO-Friendly',
-    slug: 'tips-website-seo',
-    excerpt: 'Pelajari teknik-teknik penting untuk membuat website Anda mudah ditemukan di search engine.',
-    date: '2024-04-01',
-    category: 'SEO',
-  },
-  {
-    id: 2,
-    title: 'Tren Teknologi 2024 untuk Digital Business',
-    slug: 'tren-teknologi-2024',
-    excerpt: 'Eksplorasi tren teknologi terbaru yang akan mengubah cara berbisnis di tahun 2024.',
-    date: '2024-03-28',
-    category: 'Teknologi',
-  },
-  {
-    id: 3,
-    title: 'Panduan Memilih Platform E-Commerce Terbaik',
-    slug: 'panduan-ecommerce',
-    excerpt:
-      'Ketahui kriteria dan tips memilih platform e-commerce yang tepat untuk bisnis online Anda.',
-    date: '2024-03-25',
-    category: 'E-Commerce',
-  },
-  {
-    id: 4,
-    title: 'Mengapa User Experience Penting untuk Aplikasi Mobile',
-    slug: 'ux-mobile-app',
-    excerpt:
-      'Pahami pentingnya desain UX yang baik dalam meningkatkan kepuasan pengguna aplikasi mobile.',
-    date: '2024-03-20',
-    category: 'UX Design',
-  },
-  {
-    id: 5,
-    title: 'Keamanan Data: Best Practices untuk Website Anda',
-    slug: 'keamanan-data-website',
-    excerpt:
-      'Tips dan best practices untuk menjaga keamanan data website dan informasi pelanggan Anda.',
-    date: '2024-03-15',
-    category: 'Keamanan',
-  },
-  {
-    id: 6,
-    title: 'Optimasi Performance: Membuat Website Lebih Cepat',
-    slug: 'optimasi-performance',
-    excerpt:
-      'Teknik-teknik untuk mengoptimasi kecepatan loading website dan meningkatkan user experience.',
-    date: '2024-03-10',
-    category: 'Performance',
-  },
-]
+export default async function Blog() {
+  const posts = await getArticles();
 
-export default function Blog() {
+  const renderedPosts =
+    posts.length > 0
+      ? posts.map((post) => ({
+          id: post.id,
+          title: post.title,
+          slug: post.slug,
+          excerpt: post.excerpt || post.content.slice(0, 140) + '...',
+          image: post.image || '/brand/asdev-logo-light.png',
+          createdAt: post.createdAt,
+          category: 'Insight',
+        }))
+      : fallbackPosts;
+
   return (
     <div className="pt-16">
-      {/* Hero Section */}
-      <section className="section py-20 bg-gradient-to-br from-gray-50 to-white">
+      <section className="bg-gradient-to-br from-slate-50 to-white py-20 dark:from-slate-950 dark:to-slate-900">
         <div className="container mx-auto px-4">
-          <h1 className="text-5xl font-black text-gray-900 mb-6">Blog</h1>
-          <p className="text-xl text-gray-600 max-w-3xl">
-            Artikel, tips, dan insights tentang pengembangan website, mobile app, dan transformasi
-            digital bisnis.
-          </p>
+          <Reveal>
+            <span className="inline-flex rounded-full border border-primary-200 bg-primary-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-primary-700 dark:border-primary-900 dark:bg-primary-900/30 dark:text-primary-200">
+              ASDEV Insights
+            </span>
+            <h1 className="mt-6 text-4xl font-black text-slate-900 md:text-6xl dark:text-slate-100">Artikel untuk Keputusan Teknologi yang Lebih Tajam</h1>
+            <p className="mt-6 max-w-3xl text-base leading-relaxed text-slate-600 md:text-lg dark:text-slate-300">
+              Konten kami berfokus pada implementasi nyata: dari strategi produk, engineering execution, hingga optimasi platform digital.
+            </p>
+          </Reveal>
         </div>
       </section>
 
-      {/* Blog Posts Grid */}
-      <section className="section py-20">
+      <section className="section">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
-              <article
+          <Stagger className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3" stagger={0.09}>
+            {renderedPosts.map((post) => (
+              <StaggerItem
                 key={post.id}
-                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all hover:-translate-y-2 group"
+                className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900"
               >
-                <div className="w-full h-48 bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-6xl">
-                  📝
+                <div className="relative h-52 w-full bg-slate-100 dark:bg-slate-800">
+                  <Image src={post.image} alt={post.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 33vw" />
                 </div>
                 <div className="p-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="inline-block text-xs font-semibold text-primary bg-blue-50 px-3 py-1 rounded-full">
+                  <div className="mb-3 flex items-center justify-between">
+                    <span className="rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold text-primary-700 dark:bg-primary-900/40 dark:text-primary-200">
                       {post.category}
                     </span>
-                    <span className="text-xs text-gray-500">
-                      {new Date(post.date).toLocaleDateString('id-ID')}
+                    <span className="text-xs text-slate-500 dark:text-slate-400">
+                      {new Date(post.createdAt).toLocaleDateString('id-ID')}
                     </span>
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 line-clamp-2 mb-4">{post.excerpt}</p>
-                  <a href="#" className="text-primary font-semibold text-sm hover:text-primary-dark">
-                    Baca Selengkapnya →
-                  </a>
+                  <h3 className="mb-2 line-clamp-2 text-lg font-black text-slate-900 dark:text-slate-100">{post.title}</h3>
+                  <p className="mb-5 line-clamp-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{post.excerpt}</p>
+                  <Link href={`/blog/${post.slug}`} className="text-sm font-semibold text-primary-500 hover:text-primary-600">
+                    Baca selengkapnya
+                  </Link>
                 </div>
-              </article>
+              </StaggerItem>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="section py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl font-black text-gray-900 mb-4">Subscribe Newsletter</h2>
-            <p className="text-gray-600 mb-6">
-              Dapatkan update artikel dan tips terbaru langsung di email Anda.
-            </p>
-            <div className="flex gap-2">
-              <input
-                type="email"
-                placeholder="Masukkan email Anda"
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
-              />
-              <button className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors font-semibold">
-                Subscribe
-              </button>
-            </div>
-          </div>
+          </Stagger>
         </div>
       </section>
     </div>
-  )
+  );
 }
