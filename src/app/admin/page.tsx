@@ -9,12 +9,13 @@ interface Counts {
   services: number;
   portfolio: number;
   blog: number;
+  testimonials: number;
 }
 
 export default function AdminDashboard() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [counts, setCounts] = useState<Counts>({ services: 0, portfolio: 0, blog: 0 });
+  const [counts, setCounts] = useState<Counts>({ services: 0, portfolio: 0, blog: 0, testimonials: 0 });
 
   useEffect(() => {
     const checkAuthAndLoad = async () => {
@@ -25,22 +26,25 @@ export default function AdminDashboard() {
           return;
         }
 
-        const [servicesRes, portfolioRes, blogRes] = await Promise.all([
+        const [servicesRes, portfolioRes, blogRes, testimonialsRes] = await Promise.all([
           fetch('/api/services'),
           fetch('/api/portfolio'),
           fetch('/api/blog'),
+          fetch('/api/testimonials'),
         ]);
 
-        const [servicesData, portfolioData, blogData] = await Promise.all([
+        const [servicesData, portfolioData, blogData, testimonialsData] = await Promise.all([
           servicesRes.json(),
           portfolioRes.json(),
           blogRes.json(),
+          testimonialsRes.json(),
         ]);
 
         setCounts({
           services: servicesData?.data?.length || 0,
           portfolio: portfolioData?.data?.length || 0,
           blog: blogData?.data?.length || 0,
+          testimonials: testimonialsData?.data?.length || 0,
         });
       } catch {
         router.push('/admin/login');
@@ -57,7 +61,7 @@ export default function AdminDashboard() {
       { label: 'Services', count: counts.services },
       { label: 'Portfolio', count: counts.portfolio },
       { label: 'Blog Posts', count: counts.blog },
-      { label: 'Messages', count: '-' },
+      { label: 'Testimonials', count: counts.testimonials },
     ],
     [counts]
   );
@@ -77,6 +81,11 @@ export default function AdminDashboard() {
       title: 'Blog',
       description: 'Publikasikan insight untuk SEO dan branding authority.',
       href: '/admin/blog',
+    },
+    {
+      title: 'Testimonials',
+      description: 'Kelola social proof dari klien agar trust rate meningkat.',
+      href: '/admin/testimonials',
     },
     {
       title: 'Messages',

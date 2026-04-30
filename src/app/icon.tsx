@@ -1,4 +1,6 @@
-﻿import { ImageResponse } from 'next/og';
+﻿import { readFileSync } from 'fs';
+import path from 'path';
+import { ImageResponse } from 'next/og';
 
 export const size = {
   width: 512,
@@ -7,7 +9,15 @@ export const size = {
 
 export const contentType = 'image/png';
 
+function getLogoDataUrl() {
+  const logoPath = path.join(process.cwd(), 'public', 'brand', 'asdev-logo-dark.png');
+  const logo = readFileSync(logoPath);
+  return `data:image/png;base64,${logo.toString('base64')}`;
+}
+
 export default function Icon() {
+  const logoDataUrl = getLogoDataUrl();
+
   return new ImageResponse(
     (
       <div
@@ -17,15 +27,20 @@ export default function Icon() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'linear-gradient(135deg, #d62d2d 0%, #0d2a7a 100%)',
+          background: '#ffffff',
           borderRadius: 120,
-          color: 'white',
-          fontSize: 220,
-          fontWeight: 900,
-          fontFamily: 'sans-serif',
+          padding: 64,
         }}
       >
-        A
+        <img
+          src={logoDataUrl}
+          alt="ASDEV"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+          }}
+        />
       </div>
     ),
     {
