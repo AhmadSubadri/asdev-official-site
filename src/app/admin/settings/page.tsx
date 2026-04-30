@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Button from '@/components/shared/Button';
 import { useAdminAuthGuard } from '@/components/admin/useAdminAuthGuard';
 import { AdminLoadingState } from '@/components/admin/AdminLoadingState';
+import ImageUploadField from '@/components/admin/ImageUploadField';
 
 type SettingsForm = {
   siteName: string;
@@ -145,8 +146,20 @@ export default function AdminSettingsPage() {
             </div>
 
             <div className="mt-4 grid gap-4 md:grid-cols-2">
-              <Field label="Logo Light URL" value={form.logoLightUrl} onChange={(v) => setForm((p) => ({ ...p, logoLightUrl: v }))} required />
-              <Field label="Logo Dark URL" value={form.logoDarkUrl} onChange={(v) => setForm((p) => ({ ...p, logoDarkUrl: v }))} required />
+              <ImageUploadField
+                label="Logo Light URL"
+                value={form.logoLightUrl}
+                onChange={(v) => setForm((p) => ({ ...p, logoLightUrl: v }))}
+                folder="brand"
+                required
+              />
+              <ImageUploadField
+                label="Logo Dark URL"
+                value={form.logoDarkUrl}
+                onChange={(v) => setForm((p) => ({ ...p, logoDarkUrl: v }))}
+                folder="brand"
+                required
+              />
             </div>
 
             <div className="mt-6 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">

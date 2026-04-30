@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Button from '@/components/shared/Button';
 import { useAdminAuthGuard } from '@/components/admin/useAdminAuthGuard';
 import { AdminLoadingState } from '@/components/admin/AdminLoadingState';
+import ImageUploadField from '@/components/admin/ImageUploadField';
 
 type PortfolioItem = {
   id: string;
@@ -148,7 +149,13 @@ export default function AdminPortfolioPage() {
               <Field label="Judul" value={form.title} onChange={(v) => setForm((p) => ({ ...p, title: v }))} required />
               <Field label="Deskripsi" value={form.description} onChange={(v) => setForm((p) => ({ ...p, description: v }))} required multiline />
               <Field label="Kategori" value={form.category} onChange={(v) => setForm((p) => ({ ...p, category: v }))} required />
-              <Field label="URL Gambar" value={form.image} onChange={(v) => setForm((p) => ({ ...p, image: v }))} required />
+              <ImageUploadField
+                label="Gambar Portfolio"
+                value={form.image}
+                onChange={(v) => setForm((p) => ({ ...p, image: v }))}
+                folder="portfolio"
+                required
+              />
               <Field label="Link Project" value={form.link} onChange={(v) => setForm((p) => ({ ...p, link: v }))} />
               <Field label="Teknologi" value={form.technologies} onChange={(v) => setForm((p) => ({ ...p, technologies: v }))} />
               <Field label="Urutan" value={form.order} onChange={(v) => setForm((p) => ({ ...p, order: v }))} type="number" />

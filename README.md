@@ -75,3 +75,9 @@ Full documentation available in README.md or docs/ folder
 
 **Status**: Production Ready 🎉
 **Last Updated**: 2024-04-08
+
+## Deployment Notes (Vercel + Prisma)
+
+- Gunakan database PostgreSQL di Vercel (`DATABASE_URL`).
+- Build sudah otomatis menjalankan `prisma generate` + `prisma migrate deploy`.
+- Lihat panduan lengkap: `docs/VERCEL_DEPLOY.md`.

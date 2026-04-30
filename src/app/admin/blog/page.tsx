@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import Button from '@/components/shared/Button';
 import { useAdminAuthGuard } from '@/components/admin/useAdminAuthGuard';
 import { AdminLoadingState } from '@/components/admin/AdminLoadingState';
+import ImageUploadField from '@/components/admin/ImageUploadField';
 import { Markdown } from '@/components/Markdown';
 import { markdownToPlainText } from '@/lib/markdown';
 
@@ -204,7 +205,12 @@ export default function AdminBlogPage() {
                 </Button>
               </div>
               <Field label="Excerpt (opsional)" value={form.excerpt} onChange={(v) => setForm((p) => ({ ...p, excerpt: v }))} multiline />
-              <Field label="URL Gambar (opsional)" value={form.image} onChange={(v) => setForm((p) => ({ ...p, image: v }))} />
+              <ImageUploadField
+                label="Gambar Cover (opsional)"
+                value={form.image}
+                onChange={(v) => setForm((p) => ({ ...p, image: v }))}
+                folder="blog"
+              />
 
               <div className="rounded-xl border border-slate-200 dark:border-slate-700">
                 <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 p-3 dark:border-slate-700">

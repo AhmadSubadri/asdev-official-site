@@ -3,6 +3,7 @@ import { JetBrains_Mono, Plus_Jakarta_Sans, Sora } from 'next/font/google';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
+import ThemeInitializer from '@/components/shared/ThemeInitializer';
 import { getSiteSettings } from '@/lib/site-settings';
 import './globals.css';
 
@@ -107,40 +108,15 @@ export default async function RootLayout({
         <meta charSet="utf-8" />
         <meta name="language" content="Indonesian" />
         <meta name="theme-color" content="#D62D2D" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "(function(){try{var t=localStorage.getItem('theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d);}catch(e){}})();",
-          }}
-        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="canonical" href={appUrl} />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'LocalBusiness',
-              name: settings.siteName,
-              url: appUrl,
-              description: settings.seoDefaultDescription,
-              address: {
-                '@type': 'PostalAddress',
-                addressCountry: 'ID',
-                addressLocality: settings.addressText,
-              },
-              telephone: settings.phoneDisplay,
-              email: settings.supportEmail,
-              sameAs: [settings.facebookUrl, settings.instagramUrl, settings.linkedinUrl].filter(Boolean),
-            }),
-          }}
-        />
       </head>
       <body
         className="min-h-full flex flex-col bg-slate-50 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100"
         suppressHydrationWarning
       >
+        <ThemeInitializer />
         <AnalyticsTracker />
         <Navbar
           siteName={settings.siteName}

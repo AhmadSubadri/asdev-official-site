@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Script from 'next/script';
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
 import { Markdown } from '@/components/Markdown';
@@ -24,6 +25,46 @@ function extractToc(content: string) {
       id: slugifyHeading(item[2]),
     }))
     .filter((item) => Boolean(item.id));
+}
+
+async function getRelatedArticles(currentId: string, title: string) {
+  const keywords = title
+    .toLowerCase()
+    .split(/\s+/)
+    .map((word) => word.replace(/[^a-z0-9]/g, ''))
+    .filter((word) => word.length >= 4)
+    .slice(0, 4);
+
+  const relatedByTitle =
+    keywords.length > 0
+      ? await db.blogArticle.findMany({
+          where: {
+            published: true,
+            NOT: { id: currentId },
+            OR: keywords.map((word) => ({
+              title: { contains: word },
+            })),
+          },
+          orderBy: { updatedAt: 'desc' },
+          take: 3,
+        })
+      : [];
+
+  if (relatedByTitle.length >= 3) {
+    return relatedByTitle;
+  }
+
+  const excludedIds = [currentId, ...relatedByTitle.map((item) => item.id)];
+  const latestArticles = await db.blogArticle.findMany({
+    where: {
+      published: true,
+      NOT: { id: { in: excludedIds } },
+    },
+    orderBy: { updatedAt: 'desc' },
+    take: 3 - relatedByTitle.length,
+  });
+
+  return [...relatedByTitle, ...latestArticles];
 }
 
 export async function generateMetadata({
@@ -87,6 +128,7 @@ export default async function BlogArticlePage({
   const readingTime = estimateReadingTime(article.content);
   const toc = extractToc(article.content);
   const shareUrl = `${baseUrl}/blog/${article.slug}`;
+  const relatedArticles = await getRelatedArticles(article.id, article.title);
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -115,7 +157,12 @@ export default async function BlogArticlePage({
 
   return (
     <article className="mx-auto max-w-7xl px-4 py-14 md:py-20">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <Script
+        id={`blog-ldjson-${article.id}`}
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] xl:gap-12">
         <div>
           <header className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-800 dark:bg-slate-900 md:p-10">
@@ -157,6 +204,32 @@ export default async function BlogArticlePage({
               Diskusikan Kebutuhan Digital
             </Link>
           </div>
+
+          {relatedArticles.length > 0 && (
+            <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-800 dark:bg-slate-900 md:p-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary-600 dark:text-primary-300">Konten Terkait</p>
+              <h2 className="mt-3 text-2xl font-black text-slate-900 dark:text-slate-100">Lanjut Baca Insight Lainnya</h2>
+              <div className="mt-6 grid gap-4 md:grid-cols-3">
+                {relatedArticles.map((item) => (
+                  <article key={item.id} className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-950">
+                    {item.image && <img src={item.image} alt={item.title} className="h-32 w-full object-cover" />}
+                    <div className="p-4">
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        {new Date(item.updatedAt).toLocaleDateString('id-ID')}
+                      </p>
+                      <h3 className="mt-2 line-clamp-2 text-base font-black text-slate-900 dark:text-slate-100">{item.title}</h3>
+                      <p className="mt-2 line-clamp-3 text-sm text-slate-600 dark:text-slate-300">
+                        {item.excerpt || `${markdownToPlainText(item.content).slice(0, 100)}...`}
+                      </p>
+                      <Link href={`/blog/${item.slug}`} className="mt-3 inline-flex text-sm font-semibold text-primary-500 hover:text-primary-600">
+                        Baca artikel
+                      </Link>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-24 lg:h-max">

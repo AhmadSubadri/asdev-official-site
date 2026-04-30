@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Button from '@/components/shared/Button';
 import { useAdminAuthGuard } from '@/components/admin/useAdminAuthGuard';
 import { AdminLoadingState } from '@/components/admin/AdminLoadingState';
+import ImageUploadField from '@/components/admin/ImageUploadField';
 
 type ServiceItem = {
   id: string;
@@ -147,7 +148,12 @@ export default function AdminServicesPage() {
               <Field label="Deskripsi" value={form.description} onChange={(v) => setForm((p) => ({ ...p, description: v }))} required multiline />
               <Field label="Detail Fitur (pisah koma/new line)" value={form.detail} onChange={(v) => setForm((p) => ({ ...p, detail: v }))} multiline />
               <Field label="Icon" value={form.icon} onChange={(v) => setForm((p) => ({ ...p, icon: v }))} />
-              <Field label="URL Gambar" value={form.image} onChange={(v) => setForm((p) => ({ ...p, image: v }))} />
+              <ImageUploadField
+                label="Gambar Layanan"
+                value={form.image}
+                onChange={(v) => setForm((p) => ({ ...p, image: v }))}
+                folder="services"
+              />
               <Field label="Urutan" value={form.order} onChange={(v) => setForm((p) => ({ ...p, order: v }))} type="number" />
 
               <div className="flex gap-3">

@@ -2,9 +2,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { db } from '@/lib/db';
 import { getAuthUser } from '@/lib/auth';
-import { DEFAULT_SITE_SETTINGS, getSiteSettings } from '@/lib/site-settings';
+import { DEFAULT_SITE_SETTINGS, getSiteSettings, upsertSiteSettings } from '@/lib/site-settings';
 
 const settingsSchema = z.object({
   siteName: z.string().min(2).max(120),
@@ -56,13 +55,7 @@ export async function PUT(request: NextRequest) {
       linkedinUrl: normalizeSocialUrl(validated.linkedinUrl),
     };
 
-    await db.siteSetting.upsert({
-      where: { singletonKey: 'default' },
-      update: payload,
-      create: payload,
-    });
-
-    const settings = await getSiteSettings();
+    const settings = await upsertSiteSettings(payload);
     return NextResponse.json({ success: true, message: 'Pengaturan berhasil disimpan', data: settings });
   } catch (error) {
     if (error instanceof z.ZodError) {
