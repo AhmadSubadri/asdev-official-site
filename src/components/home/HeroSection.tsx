@@ -52,6 +52,29 @@ export default function HeroSection() {
         <div className="absolute -left-20 bottom-16 h-72 w-72 rounded-full bg-secondary-200/40 blur-3xl dark:bg-secondary-900/30" />
         <div className="absolute inset-0 opacity-35 [background-image:linear-gradient(to_right,rgba(100,116,139,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(100,116,139,0.18)_1px,transparent_1px)] [background-size:36px_36px] dark:opacity-20" />
 
+        <div className="pointer-events-none absolute inset-0 overflow-hidden lg:hidden">
+          {flyingTech.slice(0, 4).map((badge, index) => (
+            <div
+              key={`mobile-${badge.name}`}
+              className="tech-fly-item tech-fly-item-mobile"
+              style={{
+                top: `${20 + index * 16}%`,
+                animationDuration: `${28 + index * 5}s`,
+                animationDelay: `-${badge.delay}s`,
+              }}
+            >
+              <motion.div
+                className={`flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200/80 ${badge.bg} shadow-md backdrop-blur dark:border-slate-700/70`}
+                animate={{ y: [0, -6, 0], rotate: [0, 2, -2, 0] }}
+                transition={{ duration: 4 + index * 0.5, repeat: Infinity, ease: 'easeInOut' }}
+                title={badge.name}
+              >
+                <img src={badge.icon} alt={badge.name} className="h-4 w-4 object-contain" />
+              </motion.div>
+            </div>
+          ))}
+        </div>
+
         <div className="pointer-events-none absolute inset-0 hidden overflow-hidden lg:block">
           {flyingTech.map((badge, index) => (
             <div

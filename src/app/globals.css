@@ -68,9 +68,28 @@
     animation-play-state: paused;
   }
 
+  .about-fly-item {
+    @apply absolute left-[-16%];
+    animation: about-fly-across linear infinite;
+    opacity: 0.9;
+  }
+
+  .about-fly-item-mobile {
+    left: -22%;
+    opacity: 0.72;
+  }
+
+  .about-fly-item-reverse {
+    animation-direction: reverse;
+  }
+
   .tech-fly-item {
     @apply absolute left-[-18%];
     animation: tech-fly-across linear infinite;
+  }
+
+  .tech-fly-item-mobile {
+    opacity: 0.8;
   }
 
   .tech-marquee-track {
@@ -262,6 +281,23 @@
   }
 }
 
+@keyframes about-fly-across {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(132vw);
+    opacity: 0;
+  }
+}
+
 @keyframes tech-fly-across {
   0% {
     transform: translateX(0);
@@ -281,6 +317,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .tech-fly-item {
+    animation: none;
+  }
+
+  .about-fly-item {
     animation: none;
   }
 
