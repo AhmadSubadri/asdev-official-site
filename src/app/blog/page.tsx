@@ -6,8 +6,8 @@ import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal';
 import { markdownToPlainText } from '@/lib/markdown';
 
 export const metadata: Metadata = {
-  title: 'Blog - ASDEV Solution Technology',
-  description: 'Insight praktis ASDEV seputar software development, product strategy, dan transformasi digital bisnis.',
+  title: 'Blog',
+  description: 'Insight praktis seputar software development, product strategy, dan transformasi digital bisnis.',
 };
 
 const fallbackPosts = [

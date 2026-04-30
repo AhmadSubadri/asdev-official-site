@@ -1,11 +1,18 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import { useState } from 'react';
 import BrandLogo from '@/components/shared/BrandLogo';
 import ThemeToggle from '@/components/shared/ThemeToggle';
 
-export default function Navbar() {
+interface NavbarProps {
+  siteShortName: string;
+  siteName: string;
+  logoLightUrl: string;
+  logoDarkUrl: string;
+}
+
+export default function Navbar({ siteShortName, siteName, logoLightUrl, logoDarkUrl }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
@@ -20,7 +27,12 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 z-50 w-full border-b border-slate-200/70 bg-white/90 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/90">
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
-        <BrandLogo />
+        <BrandLogo
+          primaryText={siteShortName}
+          secondaryText={siteName.replace(siteShortName, '').trim() || siteName}
+          logoLightUrl={logoLightUrl}
+          logoDarkUrl={logoDarkUrl}
+        />
 
         <div className="hidden items-center gap-7 md:flex">
           {navLinks.map((link) => (

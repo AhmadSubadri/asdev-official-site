@@ -4,9 +4,9 @@ import Button from '@/components/shared/Button';
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal';
 
 export const metadata: Metadata = {
-  title: 'Tentang Kami - ASDEV Solution Technology',
+  title: 'Tentang Kami',
   description:
-    'Profil ASDEV Solution Technology: visi, nilai kerja, dan pendekatan delivery untuk membantu bisnis bertumbuh lewat teknologi.',
+    'Profil perusahaan: visi, nilai kerja, dan pendekatan delivery untuk membantu bisnis bertumbuh lewat teknologi.',
 };
 
 const principles = [

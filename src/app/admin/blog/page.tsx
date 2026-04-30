@@ -44,6 +44,8 @@ const snippets = [
   { label: 'Link', text: '\n[Label Link](https://example.com)\n' },
   { label: 'Inline Code', text: '`npm run build`' },
   { label: 'Code Block', text: '\n```ts\nconst hello = "ASDEV";\nconsole.log(hello);\n```\n' },
+  { label: 'Callout', text: '\n> [!TIP]\n> Pakai command ini untuk build production.\n' },
+  { label: 'Table', text: '\n| Fitur | Status | Catatan |\n| --- | --- | --- |\n| Blog markdown | Ready | Support code/callout/table |\n| Share article | Ready | WA, LinkedIn, X, Facebook |\n' },
   { label: 'Quote', text: '\n> Insight penting untuk pembaca.\n' },
 ];
 
@@ -285,7 +287,7 @@ export default function AdminBlogPage() {
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <h3 className="text-lg font-black text-slate-900 dark:text-slate-100">{item.title}</h3>
-                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">/{item.slug} • {item.published ? 'Published' : 'Draft'}</p>
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">/{item.slug} | {item.published ? 'Published' : 'Draft'}</p>
                       <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 line-clamp-2">{item.excerpt || markdownToPlainText(item.content)}</p>
                     </div>
                     <div className="flex gap-2">

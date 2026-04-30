@@ -1,44 +1,45 @@
-import Image from "next/image";
-import Link from "next/link";
+﻿import Link from 'next/link';
 
 interface BrandLogoProps {
   compact?: boolean;
   href?: string;
   inverted?: boolean;
+  primaryText?: string;
+  secondaryText?: string;
+  logoLightUrl?: string;
+  logoDarkUrl?: string;
 }
 
-export default function BrandLogo({ compact = false, href = "/", inverted = false }: BrandLogoProps) {
+export default function BrandLogo({
+  compact = false,
+  href = '/',
+  inverted = false,
+  primaryText = 'ASDEV',
+  secondaryText = 'Solution Technology',
+  logoLightUrl = '/brand/asdev-logo-light.png',
+  logoDarkUrl = '/brand/asdev-logo-dark.png',
+}: BrandLogoProps) {
   return (
-    <Link href={href} className="flex items-center gap-3" aria-label="Asdev Solution Technology">
+    <Link href={href} className="flex items-center gap-3" aria-label={primaryText}>
       <div className="relative h-11 w-11 overflow-hidden rounded-full ring-1 ring-neutral-200 dark:ring-white/20">
-        <Image
-          src="/brand/asdev-logo-light.png"
-          alt="ASDEV logo"
-          fill
-          sizes="44px"
-          className="object-cover dark:hidden"
-          priority
-        />
-        <Image
-          src="/brand/asdev-logo-dark.png"
-          alt="ASDEV logo"
-          fill
-          sizes="44px"
-          className="hidden object-cover dark:block"
-          priority
-        />
+        <img src={logoLightUrl} alt={`${primaryText} logo`} className="h-full w-full object-cover dark:hidden" />
+        <img src={logoDarkUrl} alt={`${primaryText} logo`} className="hidden h-full w-full object-cover dark:block" />
       </div>
       {!compact && (
         <div className="leading-tight">
           <p
-            className={`text-sm font-black tracking-[0.12em] ${inverted ? 'text-slate-100' : 'text-slate-900 dark:text-slate-100'}`}
+            className={`text-sm font-black tracking-[0.12em] ${
+              inverted ? 'text-slate-100' : 'text-slate-900 dark:text-slate-100'
+            }`}
           >
-            ASDEV
+            {primaryText}
           </p>
           <p
-            className={`text-[11px] uppercase tracking-[0.08em] ${inverted ? 'text-slate-300' : 'text-slate-500 dark:text-slate-300'}`}
+            className={`text-[11px] uppercase tracking-[0.08em] ${
+              inverted ? 'text-slate-300' : 'text-slate-500 dark:text-slate-300'
+            }`}
           >
-            Solution Technology
+            {secondaryText}
           </p>
         </div>
       )}

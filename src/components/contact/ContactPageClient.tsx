@@ -5,7 +5,21 @@ import Button from '@/components/shared/Button';
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal';
 import { trackEvent } from '@/lib/analytics';
 
-export default function ContactPageClient() {
+interface ContactPageClientProps {
+  supportEmail: string;
+  phoneDisplay: string;
+  whatsappNumber: string;
+  addressText: string;
+  businessHours: string;
+}
+
+export default function ContactPageClient({
+  supportEmail,
+  phoneDisplay,
+  whatsappNumber,
+  addressText,
+  businessHours,
+}: ContactPageClientProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -119,31 +133,31 @@ export default function ContactPageClient() {
               <StaggerItem className="surface-card p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">Email</p>
                 <a
-                  href="mailto:info@asdev.id"
+                  href={`mailto:${supportEmail}`}
                   className="mt-2 block text-lg font-black text-slate-900 hover:text-primary-600 dark:text-slate-100"
                   onClick={() => trackEvent({ event: 'cta_click', label: 'contact_email' })}
                 >
-                  info@asdev.id
+                  {supportEmail}
                 </a>
               </StaggerItem>
 
               <StaggerItem className="surface-card p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">WhatsApp</p>
                 <a
-                  href="https://wa.me/6281234567890"
+                  href={`https://wa.me/${whatsappNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-2 block text-lg font-black text-slate-900 hover:text-primary-600 dark:text-slate-100"
                   onClick={() => trackEvent({ event: 'cta_click', label: 'contact_whatsapp' })}
                 >
-                  +62 812-3456-7890
+                  {phoneDisplay}
                 </a>
               </StaggerItem>
 
               <StaggerItem className="surface-card p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">Lokasi & Waktu Kerja</p>
-                <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">Indonesia (remote-first)</p>
-                <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">Senin - Jumat, 09:00 - 18:00 WIB</p>
+                <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">{addressText}</p>
+                <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">{businessHours}</p>
               </StaggerItem>
 
               <StaggerItem className="overflow-hidden rounded-2xl bg-[linear-gradient(120deg,#0d2a7a_0%,#1c2d57_45%,#d62d2d_100%)] p-6 text-white">

@@ -5,7 +5,11 @@ import Button from '@/components/shared/Button';
 import { Reveal } from '@/components/motion/Reveal';
 import { trackEvent } from '@/lib/analytics';
 
-export default function CTASection() {
+interface CTASectionProps {
+  whatsappNumber: string;
+}
+
+export default function CTASection({ whatsappNumber }: CTASectionProps) {
   return (
     <section className="section">
       <div className="container mx-auto px-4">
@@ -34,7 +38,7 @@ export default function CTASection() {
                   Konsultasi Gratis
                 </Button>
               </Link>
-              <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
+              <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
                 <Button
                   size="lg"
                   variant="outline"

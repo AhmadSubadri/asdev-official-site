@@ -1,7 +1,9 @@
 import { MetadataRoute } from 'next'
+import { getSiteSettings } from '@/lib/site-settings'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://asdev-digital.com'
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const settings = await getSiteSettings()
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || settings.websiteUrl || 'https://asdev-digital.com'
 
   return [
     {
@@ -42,4 +44,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 }
-

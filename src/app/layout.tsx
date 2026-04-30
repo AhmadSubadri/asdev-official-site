@@ -1,89 +1,102 @@
-import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono, Plus_Jakarta_Sans, Sora } from "next/font/google";
-import Navbar from "@/components/shared/Navbar";
-import Footer from "@/components/shared/Footer";
-import AnalyticsTracker from "@/components/analytics/AnalyticsTracker";
-import "./globals.css";
+import type { Metadata, Viewport } from 'next';
+import { JetBrains_Mono, Plus_Jakarta_Sans, Sora } from 'next/font/google';
+import Navbar from '@/components/shared/Navbar';
+import Footer from '@/components/shared/Footer';
+import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
+import { getSiteSettings } from '@/lib/site-settings';
+import './globals.css';
 
 const bodySans = Plus_Jakarta_Sans({
-  variable: "--font-body-sans",
-  subsets: ["latin"],
-  display: "swap",
+  variable: '--font-body-sans',
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 const displaySans = Sora({
-  variable: "--font-display-sans",
-  subsets: ["latin"],
-  display: "swap",
+  variable: '--font-display-sans',
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 const codeMono = JetBrains_Mono({
-  variable: "--font-code-mono",
-  subsets: ["latin"],
-  display: "swap",
+  variable: '--font-code-mono',
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 export const viewport: Viewport = {
-  width: "device-width",
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
 };
 
-export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://asdev-digital.com'),
-  title: {
-    default: "ASDEV Solution Technology - Solusi Teknologi Terpercaya",
-    template: "%s | ASDEV Solution Technology",
-  },
-  description: "Kami menyediakan layanan website development, mobile app, sistem informasi, dan UI/UX design untuk transformasi digital bisnis Anda.",
-  keywords: "asdev, digital solution, website development, mobile app, sistem informasi, ui/ux design, jakarta",
-  authors: [{ name: "ASDEV Solution Technology" }],
-  creator: "ASDEV Solution Technology",
-  publisher: "ASDEV Solution Technology",
-  openGraph: {
-    type: "website",
-    locale: "id_ID",
-    url: process.env.NEXT_PUBLIC_APP_URL || 'https://asdev-digital.com',
-    siteName: "ASDEV Solution Technology",
-    title: "ASDEV Solution Technology - Solusi Teknologi Terpercaya",
-    description: "Website development, mobile app, sistem informasi, dan UI/UX design untuk transformasi digital bisnis Anda.",
-    images: [
-      {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: "ASDEV Solution Technology",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "ASDEV Solution Technology",
-    description: "Solusi teknologi terpercaya untuk transformasi digital bisnis Anda",
-    images: ["/twitter-image"],
-  },
-  icons: {
-    icon: "/icon",
-    apple: "/apple-icon",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || settings.websiteUrl || 'https://asdev-digital.com';
+
+  return {
+    metadataBase: new URL(appUrl),
+    title: {
+      default: `${settings.siteName} - ${settings.siteTagline}`,
+      template: `%s | ${settings.siteName}`,
+    },
+    description: settings.seoDefaultDescription,
+    keywords:
+      'asdev, digital solution, website development, mobile app, sistem informasi, ui/ux design, jakarta',
+    authors: [{ name: settings.siteName }],
+    creator: settings.siteName,
+    publisher: settings.siteName,
+    openGraph: {
+      type: 'website',
+      locale: 'id_ID',
+      url: appUrl,
+      siteName: settings.siteName,
+      title: `${settings.siteName} - ${settings.siteTagline}`,
+      description: settings.seoDefaultDescription,
+      images: [
+        {
+          url: '/opengraph-image',
+          width: 1200,
+          height: 630,
+          alt: settings.siteName,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: settings.siteName,
+      description: settings.seoDefaultDescription,
+      images: ['/twitter-image'],
+    },
+    icons: {
+      icon: '/icon',
+      apple: '/apple-icon',
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
-  },
-};
+    alternates: {
+      canonical: appUrl,
+    },
+  };
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getSiteSettings();
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || settings.websiteUrl || 'https://asdev-digital.com';
+
   return (
     <html
       lang="id"
@@ -100,43 +113,54 @@ export default function RootLayout({
               "(function(){try{var t=localStorage.getItem('theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d);}catch(e){}})();",
           }}
         />
-        {/* Preconnect to external resources */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Canonical URL */}
-        <link rel="canonical" href={process.env.NEXT_PUBLIC_APP_URL || 'https://asdev-digital.com'} />
-        {/* Schema.org structured data */}
+        <link rel="canonical" href={appUrl} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              name: "ASDEV Solution Technology",
-              url: process.env.NEXT_PUBLIC_APP_URL || 'https://asdev-digital.com',
-              description: "Solusi teknologi terpercaya untuk transformasi digital bisnis",
+              '@context': 'https://schema.org',
+              '@type': 'LocalBusiness',
+              name: settings.siteName,
+              url: appUrl,
+              description: settings.seoDefaultDescription,
               address: {
-                "@type": "PostalAddress",
-                addressCountry: "ID",
-                addressLocality: "Jakarta",
-                postalCode: "12000",
+                '@type': 'PostalAddress',
+                addressCountry: 'ID',
+                addressLocality: settings.addressText,
               },
-              telephone: "+62812345678",
-              email: "info@asdev.id",
-              sameAs: [
-                "https://www.facebook.com/asdev",
-                "https://www.instagram.com/asdev",
-                "https://www.linkedin.com/company/asdev",
-              ],
+              telephone: settings.phoneDisplay,
+              email: settings.supportEmail,
+              sameAs: [settings.facebookUrl, settings.instagramUrl, settings.linkedinUrl].filter(Boolean),
             }),
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100" suppressHydrationWarning>
+      <body
+        className="min-h-full flex flex-col bg-slate-50 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100"
+        suppressHydrationWarning
+      >
         <AnalyticsTracker />
-        <Navbar />
+        <Navbar
+          siteName={settings.siteName}
+          siteShortName={settings.siteShortName}
+          logoLightUrl={settings.logoLightUrl}
+          logoDarkUrl={settings.logoDarkUrl}
+        />
         <main className="flex-1 pt-20">{children}</main>
-        <Footer />
+        <Footer
+          siteName={settings.siteName}
+          siteShortName={settings.siteShortName}
+          siteTagline={settings.siteTagline}
+          legalCompanyName={settings.legalCompanyName}
+          supportEmail={settings.supportEmail}
+          phoneDisplay={settings.phoneDisplay}
+          whatsappNumber={settings.whatsappNumber}
+          addressText={settings.addressText}
+          logoLightUrl={settings.logoLightUrl}
+          logoDarkUrl={settings.logoDarkUrl}
+        />
       </body>
     </html>
   );

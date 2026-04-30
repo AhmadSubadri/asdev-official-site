@@ -1,12 +1,23 @@
 ﻿import { Metadata } from 'next';
 import ContactPageClient from '@/components/contact/ContactPageClient';
+import { getSiteSettings } from '@/lib/site-settings';
 
 export const metadata: Metadata = {
-  title: 'Kontak - ASDEV Solution Technology',
+  title: 'Kontak',
   description:
-    'Hubungi ASDEV Solution Technology untuk diskusi website, web app, automasi bisnis, dan implementasi solusi digital.',
+    'Hubungi tim kami untuk diskusi website, web app, automasi bisnis, dan implementasi solusi digital.',
 };
 
-export default function ContactPage() {
-  return <ContactPageClient />;
+export default async function ContactPage() {
+  const settings = await getSiteSettings();
+
+  return (
+    <ContactPageClient
+      supportEmail={settings.supportEmail}
+      phoneDisplay={settings.phoneDisplay}
+      whatsappNumber={settings.whatsappNumber}
+      addressText={settings.addressText}
+      businessHours={settings.businessHours}
+    />
+  );
 }

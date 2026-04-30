@@ -1,7 +1,31 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import BrandLogo from '@/components/shared/BrandLogo';
 
-export default function Footer() {
+interface FooterProps {
+  siteName: string;
+  siteShortName: string;
+  siteTagline: string;
+  legalCompanyName: string;
+  supportEmail: string;
+  phoneDisplay: string;
+  whatsappNumber: string;
+  addressText: string;
+  logoLightUrl: string;
+  logoDarkUrl: string;
+}
+
+export default function Footer({
+  siteName,
+  siteShortName,
+  siteTagline,
+  legalCompanyName,
+  supportEmail,
+  phoneDisplay,
+  whatsappNumber,
+  addressText,
+  logoLightUrl,
+  logoDarkUrl,
+}: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -9,10 +33,14 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="mb-10 grid grid-cols-1 gap-8 md:grid-cols-4">
           <div>
-            <BrandLogo inverted />
-            <p className="mt-4 text-sm leading-relaxed text-slate-300">
-              ASDEV Solution Technology membantu bisnis bertumbuh melalui website, sistem, dan aplikasi modern.
-            </p>
+            <BrandLogo
+              inverted
+              primaryText={siteShortName}
+              secondaryText={siteName.replace(siteShortName, '').trim() || siteName}
+              logoLightUrl={logoLightUrl}
+              logoDarkUrl={logoDarkUrl}
+            />
+            <p className="mt-4 text-sm leading-relaxed text-slate-300">{siteTagline}</p>
           </div>
 
           <div>
@@ -40,21 +68,21 @@ export default function Footer() {
             <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-slate-200">Kontak</h3>
             <ul className="space-y-2 text-sm text-slate-300">
               <li>
-                <a href="mailto:info@asdev.id" className="transition hover:text-primary-300">info@asdev.id</a>
+                <a href={`mailto:${supportEmail}`} className="transition hover:text-primary-300">{supportEmail}</a>
               </li>
               <li>
-                <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" className="transition hover:text-primary-300">
-                  +62 812-3456-7890
+                <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer" className="transition hover:text-primary-300">
+                  {phoneDisplay}
                 </a>
               </li>
-              <li>Indonesia</li>
+              <li>{addressText}</li>
             </ul>
           </div>
         </div>
 
         <div className="flex flex-col items-start justify-between gap-3 border-t border-slate-700 pt-6 text-xs text-slate-400 md:flex-row md:items-center">
-          <p>&copy; {currentYear} ASDEV Solution Technology. All rights reserved.</p>
-          <p>CV Asdev Solusi Teknologi</p>
+          <p>&copy; {currentYear} {siteName}. All rights reserved.</p>
+          <p>{legalCompanyName}</p>
         </div>
       </div>
     </footer>

@@ -2,12 +2,13 @@
 import Link from 'next/link';
 import Button from '@/components/shared/Button';
 import { db } from '@/lib/db';
+import { getSiteSettings } from '@/lib/site-settings';
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal';
 
 export const metadata: Metadata = {
-  title: 'Layanan Kami - ASDEV Solution Technology',
+  title: 'Layanan Kami',
   description:
-    'Layanan digital ASDEV mencakup website, custom web app, integrasi API, UI/UX design, hingga maintenance berkelanjutan.',
+    'Layanan digital mencakup website, custom web app, integrasi API, UI/UX design, hingga maintenance berkelanjutan.',
 };
 
 const fallbackServices = [
@@ -59,8 +60,9 @@ async function getServices() {
 }
 
 export default async function Services() {
+  const settings = await getSiteSettings();
   const services = await getServices();
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://asdev-digital.com';
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || settings.websiteUrl || 'https://asdev-digital.com';
 
   const renderedServices =
     services.length > 0
@@ -78,7 +80,7 @@ export default async function Services() {
   const serviceListSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Layanan ASDEV Solution Technology',
+    name: `Layanan ${settings.siteName}`,
     itemListElement: renderedServices.map((service, index) => ({
       '@type': 'ListItem',
       position: index + 1,
@@ -88,7 +90,7 @@ export default async function Services() {
         description: service.description,
         provider: {
           '@type': 'Organization',
-          name: 'ASDEV Solution Technology',
+          name: settings.siteName,
           url: baseUrl,
         },
       },

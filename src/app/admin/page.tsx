@@ -83,6 +83,11 @@ export default function AdminDashboard() {
       description: 'Pantau lead masuk dari halaman kontak.',
       href: '/admin/messages',
     },
+    {
+      title: 'Site Settings',
+      description: 'Atur logo, nama website, kontak, dan SEO global.',
+      href: '/admin/settings',
+    },
   ];
 
   const handleLogout = async () => {

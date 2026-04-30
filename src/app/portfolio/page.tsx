@@ -1,11 +1,12 @@
 ﻿import { Metadata } from 'next';
 import Image from 'next/image';
 import { db } from '@/lib/db';
+import { getSiteSettings } from '@/lib/site-settings';
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal';
 
 export const metadata: Metadata = {
-  title: 'Portofolio - ASDEV Solution Technology',
-  description: 'Studi kasus dan implementasi digital dari project yang dikerjakan ASDEV Solution Technology.',
+  title: 'Portofolio',
+  description: 'Studi kasus dan implementasi digital dari project yang sudah dikerjakan.',
 };
 
 const fallbackProjects = [
@@ -53,8 +54,9 @@ async function getPortfolio() {
 }
 
 export default async function Portfolio() {
+  const settings = await getSiteSettings();
   const portfolio = await getPortfolio();
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://asdev-digital.com';
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || settings.websiteUrl || 'https://asdev-digital.com';
 
   const renderedProjects =
     portfolio.length > 0
@@ -73,7 +75,7 @@ export default async function Portfolio() {
   const portfolioListSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Portofolio ASDEV Solution Technology',
+    name: `Portofolio ${settings.siteName}`,
     itemListElement: renderedProjects.map((project, index) => ({
       '@type': 'ListItem',
       position: index + 1,
