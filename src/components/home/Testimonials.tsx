@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Button from '@/components/shared/Button';
-import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal';
+import { Reveal } from '@/components/motion/Reveal';
 
 export type HomeTestimonialItem = {
   id: string;
@@ -58,6 +58,8 @@ function Stars({ rating }: { rating: number }) {
 }
 
 export default function Testimonials({ testimonials }: TestimonialsProps) {
+  const marqueeTestimonials = [...testimonials, ...testimonials];
+
   return (
     <section className="section bg-slate-100/60 dark:bg-slate-900/30">
       <div className="container mx-auto px-4">
@@ -71,31 +73,35 @@ export default function Testimonials({ testimonials }: TestimonialsProps) {
           </p>
         </Reveal>
 
-        <Stagger className="grid grid-cols-1 gap-5 md:grid-cols-3" stagger={0.08}>
-          {testimonials.map((item) => (
-            <StaggerItem key={item.id} className="surface-card h-full p-6">
-              <div className="flex items-center gap-3">
-                <img
-                  src={item.avatarUrl}
-                  alt={item.name}
-                  className="h-12 w-12 rounded-full object-cover ring-2 ring-slate-200 dark:ring-slate-700"
-                />
-                <div>
-                  <p className="text-sm font-black text-slate-900 dark:text-slate-100">{item.name}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{item.role} • {item.company}</p>
-                </div>
-              </div>
+        <Reveal>
+          <div className="testimonials-marquee">
+            <div className="testimonials-marquee-track">
+              {marqueeTestimonials.map((item, index) => (
+                <article key={`${item.id}-${index}`} className="surface-card w-[86vw] max-w-[420px] p-6 md:w-[420px]">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={item.avatarUrl}
+                      alt={item.name}
+                      className="h-12 w-12 rounded-full object-cover ring-2 ring-slate-200 dark:ring-slate-700"
+                    />
+                    <div>
+                      <p className="text-sm font-black text-slate-900 dark:text-slate-100">{item.name}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">{item.role} • {item.company}</p>
+                    </div>
+                  </div>
 
-              <div className="mt-4">
-                <Stars rating={item.rating} />
-              </div>
+                  <div className="mt-4">
+                    <Stars rating={item.rating} />
+                  </div>
 
-              <blockquote className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                "{item.content}"
-              </blockquote>
-            </StaggerItem>
-          ))}
-        </Stagger>
+                  <blockquote className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                    "{item.content}"
+                  </blockquote>
+                </article>
+              ))}
+            </div>
+          </div>
+        </Reveal>
 
         <Reveal className="mt-10 surface-card p-8 md:p-10">
           <div className="grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-center">
@@ -129,4 +135,3 @@ export default function Testimonials({ testimonials }: TestimonialsProps) {
     </section>
   );
 }
-

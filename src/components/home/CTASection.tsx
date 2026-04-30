@@ -32,7 +32,7 @@ export default function CTASection({ whatsappNumber }: CTASectionProps) {
               <Link href="/contact">
                 <Button
                   size="lg"
-                  className="w-full bg-white text-secondary-700 hover:bg-slate-100"
+                  className="w-full !bg-white !text-slate-900 hover:!bg-slate-100 focus:!ring-white/40"
                   onClick={() => trackEvent({ event: 'cta_click', label: 'footer_consultation' })}
                 >
                   Konsultasi Gratis
@@ -42,7 +42,7 @@ export default function CTASection({ whatsappNumber }: CTASectionProps) {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-full border-white/70 bg-transparent text-white hover:border-white hover:bg-white/10"
+                  className="w-full !border-white/80 !bg-transparent !text-white hover:!border-white hover:!bg-white/10 focus:!ring-white/40"
                   onClick={() => trackEvent({ event: 'cta_click', label: 'footer_whatsapp' })}
                 >
                   Chat WhatsApp

@@ -49,6 +49,62 @@
     @apply rounded-2xl border border-slate-200/70 bg-white/90 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/80;
   }
 
+  .tech-marquee {
+    @apply relative overflow-hidden;
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+
+  .testimonials-marquee {
+    @apply relative overflow-hidden;
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+
+  .testimonials-marquee-track {
+    @apply flex w-max gap-5;
+    animation: testimonials-marquee-scroll 42s linear infinite;
+  }
+
+  .testimonials-marquee:hover .testimonials-marquee-track {
+    animation-play-state: paused;
+  }
+
+  .tech-fly-item {
+    @apply absolute left-[-18%];
+    animation: tech-fly-across linear infinite;
+  }
+
+  .tech-marquee-track {
+    @apply flex w-max items-center;
+    animation: tech-marquee-scroll 36s linear infinite;
+  }
+
+  .tech-marquee:hover .tech-marquee-track {
+    animation-play-state: paused;
+  }
+
+  .tech-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.55) transparent;
+  }
+
+  .tech-scrollbar::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+
+  .tech-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .tech-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background: rgba(100, 116, 139, 0.45);
+  }
+
+  .tech-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.7);
+  }
+
   .markdown-content {
     @apply text-slate-700 dark:text-slate-300;
   }
@@ -180,5 +236,54 @@
 
   .markdown-content .md-callout-caution {
     @apply border-rose-300 bg-rose-50 text-rose-900 dark:border-rose-900/60 dark:bg-rose-900/20 dark:text-rose-200;
+  }
+}
+
+@keyframes tech-marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes testimonials-marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 0.625rem));
+  }
+}
+
+@keyframes tech-fly-across {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(140vw);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-fly-item {
+    animation: none;
+  }
+
+  .tech-marquee-track {
+    animation: none;
+  }
+
+  .testimonials-marquee-track {
+    animation: none;
   }
 }
