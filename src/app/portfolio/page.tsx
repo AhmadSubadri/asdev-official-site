@@ -54,6 +54,7 @@ async function getPortfolio() {
 
 export default async function Portfolio() {
   const portfolio = await getPortfolio();
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://asdev-digital.com';
 
   const renderedProjects =
     portfolio.length > 0
@@ -69,8 +70,27 @@ export default async function Portfolio() {
         }))
       : fallbackProjects;
 
+  const portfolioListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Portofolio ASDEV Solution Technology',
+    itemListElement: renderedProjects.map((project, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'CreativeWork',
+        name: project.title,
+        description: project.description,
+        image: project.image,
+        about: project.category,
+        url: project.link || `${baseUrl}/portfolio`,
+      },
+    })),
+  };
+
   return (
     <div className="pt-16">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(portfolioListSchema) }} />
       <section className="bg-gradient-to-br from-slate-50 to-white py-20 dark:from-slate-950 dark:to-slate-900">
         <div className="container mx-auto px-4">
           <Reveal>

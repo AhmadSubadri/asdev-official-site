@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Button from '@/components/shared/Button';
 import { Reveal } from '@/components/motion/Reveal';
+import { trackEvent } from '@/lib/analytics';
 
 export default function CTASection() {
   return (
@@ -25,10 +26,21 @@ export default function CTASection() {
 
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
               <Link href="/contact">
-                <Button size="lg" className="w-full bg-white text-secondary-700 hover:bg-slate-100">Konsultasi Gratis</Button>
+                <Button
+                  size="lg"
+                  className="w-full bg-white text-secondary-700 hover:bg-slate-100"
+                  onClick={() => trackEvent({ event: 'cta_click', label: 'footer_consultation' })}
+                >
+                  Konsultasi Gratis
+                </Button>
               </Link>
               <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
-                <Button size="lg" variant="outline" className="w-full border-white/70 bg-transparent text-white hover:border-white hover:bg-white/10">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full border-white/70 bg-transparent text-white hover:border-white hover:bg-white/10"
+                  onClick={() => trackEvent({ event: 'cta_click', label: 'footer_whatsapp' })}
+                >
                   Chat WhatsApp
                 </Button>
               </a>

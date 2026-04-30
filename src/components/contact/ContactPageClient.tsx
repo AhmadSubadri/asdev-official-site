@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Button from '@/components/shared/Button';
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal';
+import { trackEvent } from '@/lib/analytics';
 
 export default function ContactPageClient() {
   const [formData, setFormData] = useState({
@@ -41,6 +42,7 @@ export default function ContactPageClient() {
       }
 
       setStatus('success');
+      trackEvent({ event: 'form_submit', label: 'contact_form_success' });
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       setTimeout(() => setStatus('idle'), 5000);
     } catch (error) {
@@ -116,7 +118,11 @@ export default function ContactPageClient() {
             <Stagger className="space-y-4" stagger={0.08}>
               <StaggerItem className="surface-card p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">Email</p>
-                <a href="mailto:info@asdev.id" className="mt-2 block text-lg font-black text-slate-900 hover:text-primary-600 dark:text-slate-100">
+                <a
+                  href="mailto:info@asdev.id"
+                  className="mt-2 block text-lg font-black text-slate-900 hover:text-primary-600 dark:text-slate-100"
+                  onClick={() => trackEvent({ event: 'cta_click', label: 'contact_email' })}
+                >
                   info@asdev.id
                 </a>
               </StaggerItem>
@@ -128,6 +134,7 @@ export default function ContactPageClient() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-2 block text-lg font-black text-slate-900 hover:text-primary-600 dark:text-slate-100"
+                  onClick={() => trackEvent({ event: 'cta_click', label: 'contact_whatsapp' })}
                 >
                   +62 812-3456-7890
                 </a>

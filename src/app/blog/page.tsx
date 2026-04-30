@@ -1,8 +1,9 @@
-﻿import { Metadata } from 'next';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { db } from '@/lib/db';
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal';
+import { markdownToPlainText } from '@/lib/markdown';
 
 export const metadata: Metadata = {
   title: 'Blog - ASDEV Solution Technology',
@@ -61,7 +62,7 @@ export default async function Blog() {
           id: post.id,
           title: post.title,
           slug: post.slug,
-          excerpt: post.excerpt || post.content.slice(0, 140) + '...',
+          excerpt: post.excerpt || markdownToPlainText(post.content).slice(0, 140) + '...',
           image: post.image || '/brand/asdev-logo-light.png',
           createdAt: post.createdAt,
           category: 'Insight',

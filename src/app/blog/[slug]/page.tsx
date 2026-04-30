@@ -1,10 +1,12 @@
-﻿import { Metadata } from 'next';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
+import { Markdown } from '@/components/Markdown';
+import { markdownToPlainText } from '@/lib/markdown';
 
 function estimateReadingTime(content: string) {
-  const words = content.replace(/<[^>]*>/g, ' ').trim().split(/\s+/).filter(Boolean).length;
+  const words = markdownToPlainText(content).split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(words / 200));
 }
 
@@ -14,6 +16,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://asdev-digital.com';
 
   const article = await db.blogArticle.findUnique({
     where: { slug },
@@ -26,6 +29,24 @@ export async function generateMetadata({
   return {
     title: `${article.title} | ASDEV Solution Technology`,
     description: article.excerpt || 'Artikel terbaru ASDEV seputar software engineering dan digital growth.',
+    alternates: {
+      canonical: `${baseUrl}/blog/${article.slug}`,
+    },
+    openGraph: {
+      type: 'article',
+      url: `${baseUrl}/blog/${article.slug}`,
+      title: article.title,
+      description: article.excerpt || 'Artikel terbaru ASDEV seputar software engineering dan digital growth.',
+      publishedTime: article.createdAt.toISOString(),
+      modifiedTime: article.updatedAt.toISOString(),
+      images: [article.image || `${baseUrl}/opengraph-image`],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: article.excerpt || 'Artikel terbaru ASDEV seputar software engineering dan digital growth.',
+      images: [article.image || `${baseUrl}/twitter-image`],
+    },
   };
 }
 
@@ -35,6 +56,7 @@ export default async function BlogArticlePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://asdev-digital.com';
 
   const article = await db.blogArticle.findUnique({
     where: { slug },
@@ -43,9 +65,35 @@ export default async function BlogArticlePage({
   if (!article || !article.published) notFound();
 
   const readingTime = estimateReadingTime(article.content);
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: article.title,
+    description: article.excerpt || markdownToPlainText(article.content).slice(0, 160),
+    image: article.image || `${baseUrl}/opengraph-image`,
+    datePublished: article.createdAt.toISOString(),
+    dateModified: article.updatedAt.toISOString(),
+    author: {
+      '@type': 'Organization',
+      name: 'ASDEV Solution Technology',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'ASDEV Solution Technology',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/icon`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${baseUrl}/blog/${article.slug}`,
+    },
+  };
 
   return (
     <article className="mx-auto max-w-6xl px-4 py-16 md:py-20">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <div className="grid gap-10 lg:grid-cols-[1fr_300px]">
         <div>
           <header className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-800 dark:bg-slate-900 md:p-10">
@@ -73,12 +121,7 @@ export default async function BlogArticlePage({
           </header>
 
           <div className="mt-10 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-800 dark:bg-slate-900 md:p-10">
-            <div
-              className="prose prose-slate max-w-none dark:prose-invert prose-headings:font-black prose-a:text-primary-500 prose-strong:font-semibold prose-p:leading-relaxed"
-              dangerouslySetInnerHTML={{
-                __html: article.content.replace(/\n/g, '<br>'),
-              }}
-            />
+            <Markdown content={article.content} />
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">

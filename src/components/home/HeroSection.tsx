@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Button from '@/components/shared/Button';
+import { trackEvent } from '@/lib/analytics';
 
 const highlights = [
   { label: 'Project Delivered', value: '50+' },
@@ -38,10 +39,14 @@ export default function HeroSection() {
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/contact">
-                <Button size="lg">Jadwalkan Konsultasi</Button>
+                <Button size="lg" onClick={() => trackEvent({ event: 'cta_click', label: 'hero_consultation' })}>
+                  Jadwalkan Konsultasi
+                </Button>
               </Link>
               <Link href="/portfolio">
-                <Button variant="outline" size="lg">Lihat Portofolio</Button>
+                <Button variant="outline" size="lg" onClick={() => trackEvent({ event: 'cta_click', label: 'hero_portfolio' })}>
+                  Lihat Portofolio
+                </Button>
               </Link>
             </div>
 

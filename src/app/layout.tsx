@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono, Plus_Jakarta_Sans, Sora } from "next/font/google";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
+import AnalyticsTracker from "@/components/analytics/AnalyticsTracker";
 import "./globals.css";
 
 const bodySans = Plus_Jakarta_Sans({
@@ -132,6 +133,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100" suppressHydrationWarning>
+        <AnalyticsTracker />
         <Navbar />
         <main className="flex-1 pt-20">{children}</main>
         <Footer />

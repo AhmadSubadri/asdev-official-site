@@ -60,6 +60,7 @@ async function getServices() {
 
 export default async function Services() {
   const services = await getServices();
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://asdev-digital.com';
 
   const renderedServices =
     services.length > 0
@@ -74,8 +75,29 @@ export default async function Services() {
         })
       : fallbackServices;
 
+  const serviceListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Layanan ASDEV Solution Technology',
+    itemListElement: renderedServices.map((service, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Service',
+        name: service.title,
+        description: service.description,
+        provider: {
+          '@type': 'Organization',
+          name: 'ASDEV Solution Technology',
+          url: baseUrl,
+        },
+      },
+    })),
+  };
+
   return (
     <div className="pt-16">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceListSchema) }} />
       <section className="bg-gradient-to-br from-slate-50 to-white py-20 dark:from-slate-950 dark:to-slate-900">
         <div className="container mx-auto px-4">
           <Reveal>
